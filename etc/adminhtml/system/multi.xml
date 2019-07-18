@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="lyra_multi" translate="label comment" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label><![CDATA[PAYMENT IN INSTALLMENTS]]></label>
+        <comment><![CDATA[ATTENTION: The payment in installments feature activation is subject to the prior agreement of Société Générale.<br />If you enable this feature while you have not the associated option, an error 10000 – INSTALLMENTS_NOT_ALLOWED or 07 - PAYMENT_CONFIG will occur and the buyer will not be able to pay.]]></comment>
+        <frontend_model>Lyranetwork\Lyra\Block\Adminhtml\System\Config\Fieldset\Dependant</frontend_model>
+        <attribute type="expanded">0</attribute>
+        <attribute type="feature">multi</attribute>
+
+        <group id="lyra_display_options" translate="label" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[DISPLAY OPTIONS]]></label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+
+            <field id="active" translate="label comment" type="select" sortOrder="311" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Activation]]></label>
+                <comment><![CDATA[Enables / disables this payment method.]]></comment>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/lyra_multi/active</config_path>
+            </field>
+
+            <field id="title" translate="label comment" type="text" sortOrder="312" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Method title]]></label>
+                <comment><![CDATA[Method title to display on payment means page.]]></comment>
+                <config_path>payment/lyra_multi/title</config_path>
+            </field>
+
+            <field id="sort_order" translate="label comment" type="text" sortOrder="313" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Sort order]]></label>
+                <comment><![CDATA[In the payment methods list.]]></comment>
+                <config_path>payment/lyra_multi/sort_order</config_path>
+            </field>
+
+            <field id="module_logo" translate="label comment" type="image" sortOrder="314" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Logo]]></label>
+                <comment><![CDATA[Allowed file types: jpeg, gif, png.]]></comment>
+                <config_path>payment/lyra_multi/module_logo</config_path>
+                <frontend_model>Lyranetwork\Lyra\Block\Adminhtml\System\Config\Form\Field\Logo</frontend_model>
+                <backend_model>Lyranetwork\Lyra\Model\System\Config\Backend\Logo</backend_model>
+                <upload_dir config="system/filesystem/media" scope_info="0">lyra/images</upload_dir>
+                <base_url type="media" scope_info="0">lyra/images</base_url>
+            </field>
+        </group>
+
+        <group id="lyra_restrictions" translate="label" type="text" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[RESTRICTIONS]]></label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+
+            <field id="allowspecific" translate="label comment" type="allowspecific" sortOrder="321" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Restrict to some countries]]></label>
+                <comment><![CDATA[Buyer's billing countries in which this payment method is available.]]></comment>
+                <config_path>payment/lyra_multi/allowspecific</config_path>
+                <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+            </field>
+
+            <field id="specificcountry" translate="label comment" type="multiselect" sortOrder="322" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Authorized countries]]></label>
+                <frontend_model>Lyranetwork\Lyra\Block\Adminhtml\System\Config\Form\Field\Multiselect</frontend_model>
+                <config_path>payment/lyra_multi/specificcountry</config_path>
+                <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                <depends>
+                    <field id="allowspecific">1</field>
+                </depends>
+            </field>
+
+            <field id="custgroup_amount_restriction" translate="label comment" sortOrder="323" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Customer group amount restriction]]></label>
+                <comment><![CDATA[Define amount restriction for each customer group.]]></comment>
+                <frontend_model>Lyranetwork\Lyra\Block\Adminhtml\System\Config\Form\Field\CustgroupOptions</frontend_model>
+                <backend_model>Lyranetwork\Lyra\Model\System\Config\Backend\CustgroupOptions</backend_model>
+                <config_path>payment/lyra_multi/custgroup_amount_restriction</config_path>
+            </field>
+        </group>
+
+        <group id="lyra_payment_page" translate="label" type="text" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[PAYMENT PAGE]]></label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+
+            <field id="capture_delay" translate="label comment" type="text" sortOrder="331" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Capture delay]]></label>
+                <comment><![CDATA[The number of days before the bank capture. Enter value only if different from Lyra Collect general configuration.]]></comment>
+                <config_path>payment/lyra_multi/capture_delay</config_path>
+            </field>
+
+            <field id="validation_mode" translate="label comment" type="select" sortOrder="332" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Validation mode]]></label>
+                <comment><![CDATA[If manual is selected, you will have to confirm payments manually in your Lyra Expert Back Office.]]></comment>
+                <source_model>Lyranetwork\Lyra\Model\System\Config\Source\ValidationMode</source_model>
+                <config_path>payment/lyra_multi/validation_mode</config_path>
+            </field>
+
+            <field id="payment_cards" translate="label comment" type="multiselect" sortOrder="333" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Card Types]]></label>
+                <comment><![CDATA[The card type(s) that can be used for the payment. Select none to use gateway configuration.]]></comment>
+                <frontend_model>Lyranetwork\Lyra\Block\Adminhtml\System\Config\Form\Field\Multiselect</frontend_model>
+                <source_model>Lyranetwork\Lyra\Model\System\Config\Source\MultiPaymentCard</source_model>
+                <backend_model>Lyranetwork\Lyra\Model\System\Config\Backend\PaymentCards</backend_model>
+                <config_path>payment/lyra_multi/payment_cards</config_path>
+            </field>
+        </group>
+
+        <group id="lyra_advanced_options" translate="label" type="text" sortOrder="34" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[ADVANCED OPTIONS]]></label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+
+            <field id="card_info_mode" translate="label comment" type="select" sortOrder="341" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Card type selection]]></label>
+                <comment><![CDATA[Select where card type will be selected by buyer.]]></comment>
+                <source_model>Lyranetwork\Lyra\Model\System\Config\Source\MultiCardInfoMode</source_model>
+                <config_path>payment/lyra_multi/card_info_mode</config_path>
+            </field>
+        </group>
+
+        <group id="lyra_payment_options" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[PAYMENT OPTIONS]]></label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+
+            <field id="multi_payment_options" translate="label comment" sortOrder="351" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Payment options]]></label>
+                <frontend_model>Lyranetwork\Lyra\Block\Adminhtml\System\Config\Form\Field\Multi\MultiPaymentOptions</frontend_model>
+                <backend_model>Lyranetwork\Lyra\Model\System\Config\Backend\Multi\MultiPaymentOptions</backend_model>
+                <config_path>payment/lyra_multi/multi_payment_options</config_path>
+                <comment><![CDATA[Click on &laquo; Add &raquo; button to configure one or more payment options.<br /><b>Label: </b>The option label to display on the frontend.<br /><b>Min. amount: </b>Minimum amount to enable the payment option.<br /><b>Max. amount: </b>Maximum amount to enable the payment option.<br /><b>Contract: </b>ID of the contract to use with the option.<br /><b>Count: </b>Total number of payments.<br /><b>Period: </b>Delay (in days) between payments.<br /><b>1st payment: </b>Amount of first payment, in percentage of total amount. If empty, all payments will have the same amount.]]></comment>
+            </field>
+        </group>
+    </group>
+</include>

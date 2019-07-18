@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Lyranetwork\Lyra\Model\Logger\Handler\Lyra">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="Lyranetwork\Lyra\Model\Logger\Lyra">
+        <arguments>
+            <argument name="name" xsi:type="string">lyra</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="debug" xsi:type="object">Lyranetwork\Lyra\Model\Logger\Handler\Lyra</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\App\Request\CsrfValidator">
+        <plugin name="lyra_skip_csrf_validator" type="Lyranetwork\Lyra\Controller\Plugin\CsrfValidator" />
+    </type>
+</config>

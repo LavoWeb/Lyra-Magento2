@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Payment\Model\CcGenericConfigProvider">
+        <arguments>
+            <argument name="methodCodes" xsi:type="array">
+                <item name="lyra_standard" xsi:type="const">Lyranetwork\Lyra\Helper\Data::METHOD_STANDARD</item>
+                <item name="lyra_multi" xsi:type="const">Lyranetwork\Lyra\Helper\Data::METHOD_MULTI</item>
+                <item name="lyra_gift" xsi:type="const">Lyranetwork\Lyra\Helper\Data::METHOD_GIFT</item>
+                <item name="lyra_choozeo" xsi:type="const">Lyranetwork\Lyra\Helper\Data::METHOD_CHOOZEO</item>
+                <item name="lyra_fullcb" xsi:type="const">Lyranetwork\Lyra\Helper\Data::METHOD_FULLCB</item>
+                <item name="lyra_sepa" xsi:type="const">Lyranetwork\Lyra\Helper\Data::METHOD_SEPA</item>
+                <item name="lyra_paypal" xsi:type="const">Lyranetwork\Lyra\Helper\Data::METHOD_PAYPAL</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="lyra_standard_config_provider" xsi:type="object">Lyranetwork\Lyra\Model\StandardConfigProvider</item>
+                <item name="lyra_multi_config_provider" xsi:type="object">Lyranetwork\Lyra\Model\MultiConfigProvider</item>
+                <item name="lyra_gift_config_provider" xsi:type="object">Lyranetwork\Lyra\Model\GiftConfigProvider</item>
+                <item name="lyra_choozeo_config_provider" xsi:type="object">Lyranetwork\Lyra\Model\ChoozeoConfigProvider</item>
+                <item name="lyra_fullcb_config_provider" xsi:type="object">Lyranetwork\Lyra\Model\FullcbConfigProvider</item>
+                <item name="lyra_sepa_config_provider" xsi:type="object">Lyranetwork\Lyra\Model\SepaConfigProvider</item>
+                <item name="lyra_paypal_config_provider" xsi:type="object">Lyranetwork\Lyra\Model\PaypalConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,58 @@
+#lyra_iframe {
+    position: relative;
+    width: 100%;
+    min-height: 530px;
+    border: 0 none;
+    margin-bottom: -5px !important;
+}
+
+.lyra-standard-cc-block {
+    display:none;
+}
+
+ul.lyra-identifier {
+    list-style-type: none;
+    display: initial;
+}
+
+a.lyra-payment-link {
+    color: #39C;
+    text-decoration: none;
+    font-family: Georgia,Times,"Times New Roman",serif;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.lyra-multi fieldset div.field {
+    float: left;
+    width: 50%;
+}
+
+.lyra-choozeo fieldset div.field {
+    float: left;
+    width: 50%;
+}
+
+.lyra_review .small {
+    font-size: 10px;
+}
+
+.lyra_review {
+    margin-top: 10px;
+    margin-left: 20px;
+    border: 1px solid black;
+    font-size: 13px !important;
+    width: 50%;
+}
+
+.lyra_review thead tr {
+    border-bottom: 1px solid black;
+}
+
+.lyra_review td.amount {
+    font-weight: bold;
+}
+
+.lyra_review td, .lyra_review th {
+    padding: 5px 5px;
+}

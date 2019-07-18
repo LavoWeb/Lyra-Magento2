@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Lyranetwork\Lyra\Controller\Adminhtml\System\Config\Reset">
+        <arguments>
+            <argument name="cache" xsi:type="object">Magento\Framework\App\Cache\Type\Config</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Model\AdminOrder\Create">
+        <arguments>
+            <argument name="emailSender" xsi:type="object">Lyranetwork\Lyra\Model\AdminOrder\EmailSender</argument>
+        </arguments>
+    </type>
+
+    <type name="Lyranetwork\Lyra\Helper\Context">
+        <arguments>
+            <argument name="urlBuilder" xsi:type="object">Magento\Backend\Model\UrlInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Lyranetwork\Lyra\Block\Adminhtml\System\Config\Form\Field\Context">
+        <arguments>
+            <argument name="urlBuilder" xsi:type="object">Magento\Framework\Url</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Payment\Ui\Component\Listing\Column\Method\Options">
+        <arguments>
+            <argument name="paymentHelper" xsi:type="object">Lyranetwork\Lyra\Helper\Payment\Data</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Payment\Model\ResourceModel\Grid\GroupList">
+        <arguments>
+            <argument name="paymentData" xsi:type="object">Lyranetwork\Lyra\Helper\Payment\Data</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Payment\Model\ResourceModel\Grid\TypeList">
+        <arguments>
+            <argument name="paymentData" xsi:type="object">Lyranetwork\Lyra\Helper\Payment\Data</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="lyra_sales_order_buttons_plugin" type="Lyranetwork\Lyra\Block\Adminhtml\Order\View" />
+    </type>
+</config>

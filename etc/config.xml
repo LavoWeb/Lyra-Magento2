@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <lyra>
+            <general>
+                <support_email>support-ecommerce@lyra-collect.com</support_email>
+                <plugin_version>2.4.1</plugin_version>
+                <gateway_version>V2</gateway_version>
+                <cms_identifier>Magento_2.x</cms_identifier>
+                <enable_logs>1</enable_logs>
+
+                <site_id>12345678</site_id>
+                <key_test>1111111111111111</key_test>
+                <key_prod>2222222222222222</key_prod>
+                <ctx_mode>TEST</ctx_mode>
+                <sign_algo>SHA-256</sign_algo>
+                <gateway_url>https://secure.lyra.com/vads-payment/</gateway_url>
+                <wsdl_url>https://secure.lyra.com/vads-ws/v5?wsdl</wsdl_url>
+                <notify_url>lyra/payment/check</notify_url>
+
+                <rest_url>https://api.lyra.com/api-payment/</rest_url>
+                <static_url>https://api.lyra.com/static/</static_url>
+
+                <language>en</language>
+                <validation_mode></validation_mode>
+
+                <redirect_enabled>0</redirect_enabled>
+                <redirect_success_timeout>5</redirect_success_timeout>
+                <redirect_success_message>Redirection to shop in a few seconds...</redirect_success_message>
+                <redirect_error_timeout>5</redirect_error_timeout>
+                <redirect_error_message>Redirection to shop in a few seconds...</redirect_error_message>
+                <return_mode>GET</return_mode>
+                <refill_cart>1</refill_cart>
+                <registered_order_status>processing</registered_order_status>
+                <capture_auto>1</capture_auto>
+
+                <send_cart_detail>1</send_cart_detail>
+                <common_category>FOOD_AND_GROCERY</common_category>
+            </general>
+        </lyra>
+
+        <payment>
+            <lyra_standard translate="title">
+                <model>Lyranetwork\Lyra\Model\Method\Standard</model>
+                <group>lyra</group>
+                <payment_action>authorize</payment_action>
+
+                <active>1</active>
+                <title>Payment by credit card</title>
+                <sort_order>1</sort_order>
+                <module_logo>standard-logo.png</module_logo>
+
+                <allowspecific>0</allowspecific>
+
+                <validation_mode>-1</validation_mode>
+                <payment_cards></payment_cards>
+
+                <card_info_mode>1</card_info_mode>
+                <oneclick_active>0</oneclick_active>
+
+                <rest_private_key_test backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <rest_private_key_prod backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <rest_return_key_test backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <rest_return_key_prod backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <notify_url>lyra/payment_rest/check</notify_url>
+                <rest_theme>material</rest_theme>
+            </lyra_standard>
+
+            <lyra_multi>
+                <model>Lyranetwork\Lyra\Model\Method\Multi</model>
+                <group>lyra</group>
+                <payment_action>authorize</payment_action>
+
+                <active>0</active>
+                <title>Payment by credit card in installments</title>
+                <sort_order>2</sort_order>
+                <module_logo>multi-logo.png</module_logo>
+
+                <allowspecific>0</allowspecific>
+
+                <validation_mode>-1</validation_mode>
+                <payment_cards></payment_cards>
+
+                <card_info_mode>1</card_info_mode>
+            </lyra_multi>
+
+            <lyra_gift>
+                <model>Lyranetwork\Lyra\Model\Method\Gift</model>
+                <group>lyra</group>
+                <payment_action>authorize</payment_action>
+
+                <active>0</active>
+                <title>Payment by gift card</title>
+                <sort_order>3</sort_order>
+                <module_logo>gift-logo.png</module_logo>
+
+                <allowspecific>0</allowspecific>
+
+                <validation_mode>-1</validation_mode>
+            </lyra_gift>
+
+            <lyra_choozeo>
+                <model>Lyranetwork\Lyra\Model\Method\Choozeo</model>
+                <group>lyra</group>
+                <payment_action>authorize</payment_action>
+
+                <active>0</active>
+                <title>Payment with Choozeo without fees</title>
+                <sort_order>4</sort_order>
+                <module_logo>choozeo-logo.png</module_logo>
+
+                <allowspecific>1</allowspecific>
+                <specificcountry>FR,GF,GP,MQ,RE,YT</specificcountry>
+                <specificcountry_display>France</specificcountry_display>
+            </lyra_choozeo>
+
+            <lyra_fullcb>
+                <model>Lyranetwork\Lyra\Model\Method\Fullcb</model>
+                <group>lyra</group>
+                <payment_action>authorize</payment_action>
+
+                <active>0</active>
+                <title>Payment with Full CB</title>
+                <sort_order>5</sort_order>
+                <module_logo>fullcb-logo.png</module_logo>
+
+                <allowspecific>1</allowspecific>
+                <specificcountry>FR</specificcountry>
+                <specificcountry_display>France</specificcountry_display>
+
+                <enable_payment_options>0</enable_payment_options>
+            </lyra_fullcb>
+
+            <lyra_sepa>
+                <model>Lyranetwork\Lyra\Model\Method\Sepa</model>
+                <group>lyra</group>
+                <payment_action>authorize</payment_action>
+
+                <active>0</active>
+                <title>Payment with SEPA</title>
+                <sort_order>6</sort_order>
+                <module_logo>sepa-logo.png</module_logo>
+
+                <allowspecific>0</allowspecific>
+
+                <mandate_mode>PAYMENT</mandate_mode>
+            </lyra_sepa>
+
+            <lyra_paypal>
+                <model>Lyranetwork\Lyra\Model\Method\Paypal</model>
+                <group>lyra</group>
+                <payment_action>authorize</payment_action>
+
+                <active>0</active>
+                <title>Payment with PayPal</title>
+                <sort_order>7</sort_order>
+                <module_logo>paypal-logo.png</module_logo>
+
+                <allowspecific>0</allowspecific>
+
+                <validation_mode>-1</validation_mode>
+            </lyra_paypal>
+        </payment>
+    </default>
+</config>

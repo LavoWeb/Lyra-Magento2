@@ -1,0 +1,98 @@
+<?php
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+?>
+
+<?php
+$_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . $block->getElement()->getId() . '_' . uniqid();
+?>
+
+<div class="design_theme_ua_regexp" id="grid<?php echo $block->escapeHtml($_htmlId); ?>">
+    <div class="admin__control-table-wrapper">
+        <table class="admin__control-table">
+            <thead>
+            <tr>
+                <?php foreach ($block->getColumns() as $columnName => $column) : ?>
+                    <th><?php echo $block->escapeHtml($column['label']); ?></th>
+                <?php endforeach; ?>
+            </tr>
+            </thead>
+            <tbody id="addRow<?php echo $block->escapeHtml($_htmlId); ?>"></tbody>
+        </table>
+    </div>
+    <input type="hidden" name="<?php echo $block->escapeHtml($block->getElement()->getName()); ?>[__empty]" value="" />
+
+    <script>
+        require([
+            'mage/template',
+            'prototype'
+        ], function(mageTemplate) {
+            // Create row creator.
+            window.arrayRow<?php echo $block->escapeHtml($_htmlId); ?> = {
+                // Define row prototypeJS template.
+                template: mageTemplate(
+                    '<tr id="<%- _id %>">'
+                    <?php foreach ($block->getColumns() as $columnName => $column) : ?>
+                        + '<td<% if (typeof all != "undefined" && all) { %> style="background-color: #b0b0b0;"<% } %>>'
+                        + '<?php echo $block->renderCellTemplate($columnName); ?>'
+                        + '<\/td>'
+                    <?php endforeach; ?>
+                    +'<\/tr>'
+                ),
+
+                add: function(rowData, insertAfterId) {
+                    // Generate default template data.
+                    var templateValues;
+
+                    // Prepare template values.
+                    if (rowData) {
+                        templateValues = rowData;
+                    } else {
+                        var d = new Date();
+                        templateValues = {
+                            <?php foreach ($block->getColumns() as $columnName => $column) : ?>
+                                <?php echo $block->escapeHtml($columnName); ?>: '',
+                            <?php endforeach; ?>
+                            option_extra_attrs: {},
+                            _id: '_' + d.getTime() + '_' + d.getMilliseconds()
+                        };
+                    }
+
+                    // Insert new row after specified row or at the bottom.
+                    if (insertAfterId) {
+                        Element.insert($(insertAfterId), {after: this.template(templateValues)});
+                    } else {
+                        Element.insert(
+                            $('addRow<?php echo $block->escapeHtml($_htmlId); ?>'),
+                            {bottom: this.template(templateValues)}
+                        );
+                    }
+
+                    // Fill controls with data.
+                    if (rowData) {
+                        var rowInputElementNames = Object.keys(rowData.column_values);
+                        for (var i = 0; i < rowInputElementNames.length; i++) {
+                            if ($(rowInputElementNames[i])) {
+                                $(rowInputElementNames[i]).value = rowData.column_values[rowInputElementNames[i]];
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Add existing rows.
+            <?php
+            foreach ($block->getArrayRows() as $_row) {
+                $id = $block->escapeHtml($_htmlId);
+                echo "arrayRow{$id}.add(" . $_row->toJson() . ");\n";
+            }
+            ?>
+        });
+    </script>
+</div>

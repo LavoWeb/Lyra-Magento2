@@ -1,0 +1,112 @@
+<!--
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {id: getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()" />
+        <label data-bind="attr: {for: getCode()}" class="label">
+            <!-- Standard logo. -->
+            <img data-bind="attr: {src: getModuleLogoUrl()}"
+                 class="payment-icon"
+                 alt="Lyra Collect"
+                 style="width: 76px;"
+            />
+
+            <span data-bind="text: getTitle()"></span>
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address lyra-form">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <fieldset class="fieldset payment method lyra-form" data-bind="attr: {id: 'payment_form_' + getCode()}" style="padding-top: 10px;">
+            <!-- ko if: (getEntryMode() == 2) && !isOneClick() -->
+                <!-- ko template: 'Lyranetwork_Lyra/payment/cc-type' --><!-- /ko -->
+            <!--/ko-->
+
+            <!-- ko if: (getEntryMode() == 4) && getRestFormToken() -->
+                <!-- ko template: { name: 'Lyranetwork_Lyra/payment/rest', data: $parent, afterRender: function(elts) { $data.initRestEvents(elts); } } --><!-- /ko -->
+            <!--/ko-->
+
+            <!-- ko if: isOneClick() -->
+                <ul class="lyra-identifier">
+                    <li class="lyra-standard-cc-block lyra-block">
+                        <!-- ko if: (getEntryMode() == 2) -->
+                            <!-- ko template: 'Lyranetwork_Lyra/payment/cc-type' --><!-- /ko -->
+                        <!--/ko-->
+
+                        <span data-bind="i18n: 'You will enter payment data after order confirmation.'"></span>
+                    </li>
+
+                    <li class="lyra-standard-cc-block lyra-block">
+                        <span data-bind="i18n: 'OR'"></span>
+                    </li>
+
+                    <li class="lyra-standard-cc-block lyra-block">
+                        <a data-bind="click: function() { lyraUseIdentifier(1); updatePaymentBlock('id'); return true; }"
+                           class="lyra-payment-link" href="javascript: void(0);">
+                            <span data-bind="i18n: 'Click here to pay with your registered means of payment.'"></span>
+                        </a>
+                    </li>
+
+                    <li class="lyra-standard-id-block lyra-block" >
+                        <span data-bind="html: $t('You will pay with your registered means of payment %s. No data entry is needed.').replace('%s', '<b>' + getMaskedPan() + '</b>')"></span>
+                    </li>
+
+                    <li class="lyra-standard-id-block lyra-block">
+                        <span data-bind="i18n: 'OR'"></span>
+                    </li>
+
+                    <li class="lyra-standard-id-block lyra-block">
+                        <a data-bind="click: function() { lyraUseIdentifier(0); updatePaymentBlock('cc'); return true; }"
+                           class="lyra-payment-link" href="javascript: void(0);">
+                            <span data-bind="i18n: 'Click here to pay with another means of payment.'"></span>
+                        </a>
+                    </li>
+                </ul>
+            <!--/ko-->
+        </fieldset>
+
+        <div class="checkout-agreements-block lyra-form">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div class="actions-toolbar lyra-form">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="click: placeOrderClick,
+                                   attr: {title: $t('Pay with Lyra Collect')},
+                                   css: {disabled: !isPlaceOrderActionAllowed()},
+                                   enable: (getCode() == isChecked())"
+                        disabled>
+                    <span data-bind="i18n: 'Pay with Lyra Collect'"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ko if: (getEntryMode() == 3) -->
+            <!-- ko template: { name: 'Lyranetwork_Lyra/payment/iframe', data: $parent, afterRender: function(elts) { $data.initIframeEvents(elts); } } --><!-- /ko -->
+        <!--/ko-->
+    </div>
+</div>

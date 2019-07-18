@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Lyra Network.
+ * This file is part of Lyra Collect plugin for Magento 2. See COPYING.md for license details.
+ *
+ * @author    Lyra Network (https://www.lyra.com/)
+ * @copyright Lyra Network
+ * @license   https://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="lyra" translate="comment" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Lyra Collect]]></label>
+                <comment><![CDATA[Accept payments by credit cards with Lyra Collect.]]></comment>
+                <attribute type="expanded">1</attribute>
+                <fieldset_css>complex lyra-section</fieldset_css>
+                <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+
+                <include path="Lyranetwork_Lyra::system/general.xml"/>
+                <include path="Lyranetwork_Lyra::system/standard.xml"/>
+                <include path="Lyranetwork_Lyra::system/multi.xml"/>
+                <include path="Lyranetwork_Lyra::system/gift.xml"/>
+                <include path="Lyranetwork_Lyra::system/choozeo.xml"/>
+                <include path="Lyranetwork_Lyra::system/fullcb.xml"/>
+                <include path="Lyranetwork_Lyra::system/sepa.xml"/>
+                <include path="Lyranetwork_Lyra::system/paypal.xml"/>
+            </group>
+        </section>
+    </system>
+</config>
